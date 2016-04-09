@@ -1,59 +1,69 @@
 # Super-CLI
 
-Super-CLI is a simple but powerful way to structure your CLI code.
-The structure is simple you have your commands, options and arguments like `script command [options] <arguments>`.
+Super-CLI is a rapid way to create simple and powerful command line tools.
+The scripts will be structured as followed `your-script command [options] <argument>, ...`
 
 ### Install
 ```sh
 npm install super-cli —save
 ```
 
-### Usage
-Create a new instance of the `CLI` class and specify the options needed.
+### Usage 
+To get started you have to require the super-cli module and register your commands.
+Remember to set the envirnment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x your-script`. 
 ```js
 #!/usr/bin/env node
 var CLI = require('super-cli');
 
 var App = new CLI({
-  name: 'App',
-  // add options...
+  name: 'my-super-cli-script',
 });
 
+// register simple command
+App.on('command', function(){
+  // do something
+});
+
+// register a command named addUser with arguments <firstname>, <lastname>
+App.on('addUser', function(firstname, lastname){
+  // CLI arguments will be accessible as function arguments
+
+  // an CLI option could be to let the user be admin
+  App.has(['-a', '--admin']); // will return true if the -a or --admin flag is set.
+});
+
+// another way to register the addUser command could be only to have the firstname
+// as an argument and let the lastname be optional 
+App.on('addUser', function(firstname){
+  var lastname = App.has(['-l=', '--lastname=']); // will return the value of lastname if its set.
+});
+
+// start your script
 App.start();
 ```
 
-##### Available options:
+##### Available CLI options:
 **options.name:** The name of the process.
-**options.path:** Path to folder where commands are storage.
-**options.command:** Default command
 
-##### Register a command
+**options.path:** Path to folder where commands are storage (will be discribed later).
+
+**options.command:** Default command, run this command if no command is typed after the script.
+
+##### Commands
+To register a command you have to give it a name and a callback. The callback can how ever be a string if its a path to a node module. It is possible to get commands to accepts arguments if you add them as function arguments in javascript see below.
 ```js
-// Arguments
-// command: name of the command
-// disctiption: optional
-// callback: function or string (will try to require the callback as a module).
-App.on('command', './path/to/module');
-App.on('command', 'description', function(){
-  // callback
+App.on('command', './path/to/command'); // the path option will prefix the string
+App.on('command', (arg1, arg2, ...) => {
+  // This command that accepts arguments
 });
 ```
 
-##### command with arguments
-```js
+##### Options
+To get and check options values for a command, can be done with the `.has()` method. The options method accepts both a single sting or an array of strings. This can be useful if you are having a shorhand and descriptive options for the same thing, like an option to se the help manual. 
 
 ```
-
-
-```js
-var CLI = require('super-cli');
-
-App = new CLI({
-  name: 'App',
-  path: __dirname+'/commands'
-});
-
-App.command('')
+App.has(['-h', '--help']); //  will return true if set when command is run
+App.has(['-k=', '--key=']); // will return the value of key if set
 ```
 
 
