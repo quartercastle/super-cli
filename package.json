@@ -1,0 +1,29 @@
+{
+  "name": "super-cli",
+  "version": "0.0.1",
+  "description": "Super-CLI is a lightweight framework to write fast and beautifule CLI tools.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "super-cli",
+    "command",
+    "line",
+    "tools"
+  ],
+  "files": [
+    "index.js",
+    "bin",
+    "LICENSE"
+  ],
+  "bin": {
+    "super-cli": "./bin/cli.js"
+  },
+  "author": "Frederik Kvartborg",
+  "license": "MIT",
+  "dependencies": {
+    "mocha": "^2.4.5"
+  }
+}
