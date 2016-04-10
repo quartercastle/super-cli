@@ -43,12 +43,12 @@ App.on('addUser', function(firstname){
 App.start();
 ```
 
-##### Available CLI options:
+#### Available CLI options:
 **name:** The name of the process.<br>
 **path:** Path to folder where commands are storage (will be described later).<br>
 **command:** Default command, run this command if no command is typed after the script.<br>
 
-##### Commands
+#### Commands
 To register a command you have to give it a name and a callback. The callback can however be a string if its a path to a node module. It is possible to get commands to accept arguments if you add them as function arguments in javascript see below.
 ```js
 App.on('command', './path/to/command'); // the path option will prefix the string
@@ -57,7 +57,7 @@ App.on('command', (arg1, arg2, ...) => {
 });
 ```
 
-##### Options
+#### Options
 To get and check option values for a command, can be done with the `.has()` method. The has method accepts both a single string or an array of strings. This can be useful if you are having a shorthand and descriptive option for the same thing, like an option to se the help manual. 
 
 ```js

@@ -102,7 +102,7 @@ class Cli {
     }
 
     if(this.events.on[name] !== undefined){
-      this.events.on[name].callback.apply(this, args);
+      return this.events.on[name].callback.apply(this, args);
     } else {
       console.log('Cannot find the command: '+name);
       console.log('Try -h, --help for help');
