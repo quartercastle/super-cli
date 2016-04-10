@@ -45,7 +45,7 @@ App.start();
 
 ##### Available CLI options:
 **name:** The name of the process.<br>
-**path:** Path to folder where commands are storage (will be discribed later).<br>
+**path:** Path to folder where commands are storage (will be described later).<br>
 **command:** Default command, run this command if no command is typed after the script.<br>
 
 ##### Commands
