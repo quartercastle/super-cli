@@ -12,12 +12,35 @@ describe('Create new CLI', () => {
   describe('Check CLI options are set correctly', () => {
     it('option.name should be = App', () => assert.equal('App', App.name));
     it('option.path should be = '+__dirname+'/commands', () => assert.equal(__dirname+'/commands', App.path));
-    it('option.command should be = testing', () => assert.equal('testing', App.command));
+    //it('option.command should be = testing', () => assert.equal('testing', App.command));
   });
 
   describe('Check CLI values', () => {
     it('cli.pid should return the process.pid', () => assert.equal(process.pid, App.pid));
     it('cli.name should be = process.title', () => assert.equal(process.title, App.name));
+  });
+});
+
+
+describe('Argument processing', () => {
+  describe('Check that the getArguments method are filtering correctly', () => {
+    process.argv = [
+     'node',
+     'script',
+     '--help',
+     'command',
+     'arg1',
+     '-f',
+     '--key=value',
+     'arg2'
+    ];
+
+    App.command = undefined;
+    App.getArguments();
+
+    it('Command should be equal to command', () => assert.equal('command', App.command));
+    it('Options should be equal to --help, -f, --key=', () => assert.deepEqual({'--help': true, '-f': true, '--key=': 'value'}, App.options));
+    it('Arguments should be equal to arg1, arg2', () => assert.deepEqual(['arg1', 'arg2'], App.arguments));
   });
 });
 
@@ -43,27 +66,21 @@ describe('Commands', () => {
 
 describe('Options', () => {
   describe('Check for flags', () => {
-    it('Should return false when -f or --flag isn\'t set', () => {
-      assert.equal(false, App.has(['-f', '--flag']));
+    it('Should return false when -a or --admin isn\'t set', () => {
+      assert.equal(false, App.has(['-a', '--admin']));
     });
 
     it('Should return true when -f or --flag is set', () => {
-      App.options['-f'] = true;
-      App.options['--flag'] = true;
-
       assert.equal(true, App.has(['-f', '--flag']));
     });
   });
 
   describe('Check for optional values', () => {
-    it('Should return the false because the -k= or --key= isn\'t set', () => {
-      assert.equal(false, App.has(['-k=', '--key=']));
+    it('Should return the false because the -u= or --user= isn\'t set', () => {
+      assert.equal(false, App.has(['-u=', '--user=']));
     });
 
     it('Should return the value of the -k= or --key=', () => {
-      App.options['-k='] = 'value';
-      App.options['--key='] = 'value';
-
       assert.equal('value', App.has(['-k=', '--key=']));
     });
   });
