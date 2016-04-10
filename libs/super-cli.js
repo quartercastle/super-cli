@@ -76,6 +76,8 @@ class Cli {
         callback: callback
       };
     }
+
+    return this;
   }
 
 
