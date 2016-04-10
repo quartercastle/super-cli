@@ -11,7 +11,7 @@ npm install super-cli —save
 
 ### Usage 
 To get started you have to require the super-cli module and register your commands.
-Remember to set the envirnment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x your-script`. 
+Remember to set the environment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x your-script`. 
 ```js
 #!/usr/bin/env node
 var CLI = require('super-cli');
@@ -49,7 +49,7 @@ App.start();
 **command:** Default command, run this command if no command is typed after the script.<br>
 
 ##### Commands
-To register a command you have to give it a name and a callback. The callback can how ever be a string if its a path to a node module. It is possible to get commands to accept arguments if you add them as function arguments in javascript see below.
+To register a command you have to give it a name and a callback. The callback can however be a string if its a path to a node module. It is possible to get commands to accept arguments if you add them as function arguments in javascript see below.
 ```js
 App.on('command', './path/to/command'); // the path option will prefix the string
 App.on('command', (arg1, arg2, ...) => {
@@ -58,7 +58,7 @@ App.on('command', (arg1, arg2, ...) => {
 ```
 
 ##### Options
-To get and check option values for a command, can be done with the `.has()` method. The has method accepts both a single sting or an array of strings. This can be useful if you are having a shorthand and descriptive option for the same thing, like an option to se the help manual. 
+To get and check option values for a command, can be done with the `.has()` method. The has method accepts both a single string or an array of strings. This can be useful if you are having a shorthand and descriptive option for the same thing, like an option to se the help manual. 
 
 ```js
 App.has(['-h', '--help']); //  will return true if set when command is run
