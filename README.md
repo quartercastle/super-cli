@@ -1,7 +1,8 @@
 # Super-CLI
 
 Super-CLI is a rapid way to create simple and powerful command line tools.
-The scripts will be structured as follows `your-script command [options] <argument>, ...`
+The scripts will be structured as follows 
+`your-script command [options] <argument>, ...`
 
 ### Install
 ```sh
