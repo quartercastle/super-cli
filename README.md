@@ -43,25 +43,23 @@ App.start();
 ```
 
 ##### Available CLI options:
-**options.name:** The name of the process.
-
-**options.path:** Path to folder where commands are storage (will be discribed later).
-
-**options.command:** Default command, run this command if no command is typed after the script.
+**name:** The name of the process.<br>
+**path:** Path to folder where commands are storage (will be discribed later).<br>
+**command:** Default command, run this command if no command is typed after the script.<br>
 
 ##### Commands
-To register a command you have to give it a name and a callback. The callback can how ever be a string if its a path to a node module. It is possible to get commands to accepts arguments if you add them as function arguments in javascript see below.
+To register a command you have to give it a name and a callback. The callback can how ever be a string if its a path to a node module. It is possible to get commands to accept arguments if you add them as function arguments in javascript see below.
 ```js
 App.on('command', './path/to/command'); // the path option will prefix the string
 App.on('command', (arg1, arg2, ...) => {
-  // This command that accepts arguments
+  // This command accepts arguments
 });
 ```
 
 ##### Options
-To get and check options values for a command, can be done with the `.has()` method. The options method accepts both a single sting or an array of strings. This can be useful if you are having a shorhand and descriptive options for the same thing, like an option to se the help manual. 
+To get and check option values for a command, can be done with the `.has()` method. The has method accepts both a single sting or an array of strings. This can be useful if you are having a shorthand and descriptive option for the same thing, like an option to se the help manual. 
 
-```
+```js
 App.has(['-h', '--help']); //  will return true if set when command is run
 App.has(['-k=', '--key=']); // will return the value of key if set
 ```
