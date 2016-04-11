@@ -11,6 +11,7 @@ process.argv = [
   'command',
   'arg1',
   '-f',
+  '-os',
   '--key=value',
   'arg2'
 ];
@@ -47,7 +48,13 @@ describe('Argument processing', () => {
     App.getArguments();
 
     it('Command should be equal to command', () => assert.equal('command', App.command));
-    it('Options should be equal to --help, -f, --key=', () => assert.deepEqual({'--help': true, '-f': true, '--key=': 'value'}, App.options));
+    it('Options should be equal to --help, -f, --key=, -o, -s', () => assert.deepEqual({
+      '--help': true,
+      '-f': true,
+      '--key=': 'value',
+      '-o': true,
+      '-s': true
+    }, App.options));
     it('Arguments should be equal to arg1, arg2', () => assert.deepEqual(['arg1', 'arg2'], App.arguments));
   });
 });
@@ -80,6 +87,11 @@ describe('Options', () => {
 
     it('Should return true when -f or --flag is set', () => {
       assert.equal(true, App.has(['-f', '--flag']));
+    });
+
+    it('Multiple options grouped together like -fa should be separated into an option -o, -s', () => {
+      assert.equal(true, App.has('-o'));
+      assert.equal(true, App.has('-s'));
     });
   });
 

@@ -43,7 +43,15 @@ class Cli {
         if(arg.indexOf('=') !== -1){
           this.options[arg.split('=')[0]+'='] = arg.split('=')[1];
         } else {
-          this.options[arg] = true;
+          if(arg[1] === '-'){
+            this.options[arg] = true;
+            return;
+          }
+
+          var chars = arg.replace('-', '').split('');
+          for(var i = 0, char; char = chars[i]; i++){
+            this.options['-'+char] = true;
+          }
         }
         return;
       }
