@@ -1,5 +1,19 @@
+'use strict';
+
 var assert = require('assert');
 var CLI = require('../libs/super-cli');
+
+// Fake some arguments
+process.argv = [
+  'node',
+  'script',
+  '--help',
+  'command',
+  'arg1',
+  '-f',
+  '--key=value',
+  'arg2'
+];
 
 var App = new CLI({
   name: 'App',
@@ -7,35 +21,29 @@ var App = new CLI({
   command: 'testing'
 });
 
+
 describe('Create new CLI', () => {
+  var Test = new CLI({
+    name: 'App',
+    path: __dirname+'/commands',
+    command: 'testing'
+  });
 
   describe('Check CLI options are set correctly', () => {
-    it('option.name should be = App', () => assert.equal('App', App.name));
-    it('option.path should be = '+__dirname+'/commands', () => assert.equal(__dirname+'/commands', App.path));
-    //it('option.command should be = testing', () => assert.equal('testing', App.command));
+    it('option.name should be = App', () => assert.equal('App', Test.name));
+    it('option.path should be = '+__dirname+'/commands', () => assert.equal(__dirname+'/commands', Test.path));
+    it('option.command should be = testing', () => assert.equal('testing', Test.default));
   });
 
   describe('Check CLI values', () => {
-    it('cli.pid should return the process.pid', () => assert.equal(process.pid, App.pid));
-    it('cli.name should be = process.title', () => assert.equal(process.title, App.name));
+    it('cli.pid should return the process.pid', () => assert.equal(process.pid, Test.pid));
+    it('cli.name should be = process.title', () => assert.equal(process.title, Test.name));
   });
 });
 
 
 describe('Argument processing', () => {
   describe('Check that the getArguments method are filtering correctly', () => {
-    process.argv = [
-     'node',
-     'script',
-     '--help',
-     'command',
-     'arg1',
-     '-f',
-     '--key=value',
-     'arg2'
-    ];
-
-    App.command = undefined;
     App.getArguments();
 
     it('Command should be equal to command', () => assert.equal('command', App.command));

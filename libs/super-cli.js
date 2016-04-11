@@ -8,28 +8,25 @@ class Cli {
     this.pid = process.pid;
     this.version = options.version;
     this.path = options.path || '';
+    this.default = options.command || options.default;
 
-    this.command = options.command;
+    this.command = undefined;
     this.arguments = [];
     this.options = {};
 
     this.events = {
       on: {
         exit: { callback: () => {} },
+        missing: { callback: () => {} }
       }
     };
   }
 
 
   start(){
-    process.on('beforeExit', () => this.trigger('exit'));
+    process.on('exit', () => this.trigger('exit'));
     this.getArguments();
-    this.trigger(this.command, this.arguments);
-  }
-
-
-  exit(code){
-    process.exit(code);
+    this.trigger((this.command || this.default), this.arguments);
   }
 
 
@@ -48,9 +45,10 @@ class Cli {
         } else {
           this.options[arg] = true;
         }
-      } else {
-        this.arguments.push(arg);
+        return;
       }
+
+      this.arguments.push(arg);
     });
   }
 
@@ -104,9 +102,18 @@ class Cli {
     if(this.events.on[name] !== undefined){
       return this.events.on[name].callback.apply(this, args);
     } else {
-      console.log('Cannot find the command: '+name);
-      console.log('Try -h, --help for help');
+      this.trigger('missing');
     }
+  }
+
+
+  missing(callback){
+    this.on('missing', callback);
+  }
+
+
+  exit(code){
+    process.exit(code);
   }
 
 }
