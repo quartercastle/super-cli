@@ -6,7 +6,7 @@ The scripts will be structured as follows
 
 ### Install
 ```sh
-npm install super-cli —save
+npm install super-cli -—save
 ```
 
 ### Usage 
