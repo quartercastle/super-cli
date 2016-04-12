@@ -67,13 +67,13 @@ describe('Commands', () => {
         return true;
       });
 
-      assert.equal(true, App.events.on['command'].callback.call());
+      assert.equal(true, App.trigger('command'));
     });
 
     it('Register with callback required from string', () => {
       App.on('command', 'test');
 
-      assert.equal(true, App.events.on['command'].callback.call());
+      assert.equal(true, App.trigger('command'));
     });
   });
 });
@@ -114,8 +114,8 @@ describe('Arguments', () => {
         return arg1 + arg2 + (arg3 || 0) + (arg4 || 0);
       });
 
-      assert.equal(5, App.events.on['command'].callback.apply(App, [2, 3]));
-      assert.equal(14, App.events.on['command'].callback.apply(App, [2, 3, 4, 5]));
+      assert.equal(5, App.trigger('command', [2, 3]));
+      assert.equal(14, App.trigger('command', [2, 3, 4, 5]));
     });
   });
 });
