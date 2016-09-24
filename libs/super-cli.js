@@ -1,5 +1,7 @@
 'use strict';
 
+const readline = require('readline');
+
 class Cli {
 
   constructor(options){
@@ -14,17 +16,23 @@ class Cli {
     this.arguments = [];
     this.options = {};
 
+    this.setupEvents();
+  }
+
+  setupEvents(){
     this.events = {
       on: {
+        terminate: { callback: () => this.exit() },
         exit: { callback: () => {} },
         missing: { callback: () => {} }
       }
     };
+
+    process.on('exit', () => this.trigger('exit'));
+    process.on('SIGINT', () => this.trigger('terminate'));
   }
 
-
   start(){
-    process.on('exit', () => this.trigger('exit'));
     this.getArguments();
     this.trigger((this.command || this.default), this.arguments);
   }
@@ -61,24 +69,22 @@ class Cli {
   }
 
 
-  on(commands, description, callback){
-    if(typeof commands == 'string'){
+  on(commands, callback){
+    if(typeof commands === 'string'){
       commands = [commands];
     }
 
-    if(callback === undefined){
-      callback = description;
-      description = '';
+    if(typeof callback === 'string'){
+      callback = require(process.cwd()+'/'+this.path+callback);
     }
 
-    if(typeof callback == 'string'){
-      callback = require(this.path+'/'+callback).bind(this);
+    if(typeof callback === 'object'){
+      callback = callback.handle.bind(callback);
     }
 
     for(var i = 0, name; name = commands[i]; i++){
       this.events.on[name] = {
         name: name,
-        description: description,
         callback: callback
       };
     }
@@ -117,6 +123,22 @@ class Cli {
 
   missing(callback){
     this.on('missing', callback);
+  }
+
+  prompt(question, callback){
+    return new Promise((resolve, reject) => {
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      });
+
+      let result = rl.question(question+' ', (result) => {
+        resolve(result);
+        rl.close();
+      });
+    });
+
+    return this;
   }
 
 
