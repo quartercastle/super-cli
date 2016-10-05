@@ -1,3 +1,5 @@
+'use strict';
+
 const SuperCLI = require('../libs/super-cli');
 const assert = require('assert');
 
