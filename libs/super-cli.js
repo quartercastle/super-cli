@@ -9,7 +9,6 @@ class Cli {
     process.title = this.name;
     this.pid = process.pid;
     this.version = options.version;
-    this.path = options.path || '';
     this.default = options.command || options.default;
 
     this.command = undefined;
@@ -21,22 +20,18 @@ class Cli {
 
   setupEvents(){
     this.events = {
-      on: {
-        terminate: { callback: () => this.exit() },
-        exit: { callback: () => {} },
-        missing: { callback: () => {} }
-      }
+      exit: [],
+      missing: []
     };
 
     process.on('exit', () => this.trigger('exit'));
-    process.on('SIGINT', () => this.trigger('terminate'));
+    process.on('SIGINT', () => this.exit());
   }
 
   start(){
     this.getArguments();
     this.trigger((this.command || this.default), this.arguments);
   }
-
 
   getArguments(){
     delete process.argv[0]; // node
@@ -68,37 +63,40 @@ class Cli {
     });
   }
 
-
   on(commands, callback){
     if(typeof commands === 'string'){
       commands = [commands];
     }
 
-    if(typeof callback === 'string'){
-      callback = require(process.cwd()+'/'+this.path+callback);
-    }
+    for(let command of commands){
+      if(this.events[command] === undefined){
+        this.events[command] = [];
+      }
 
-    if(typeof callback === 'object'){
-      callback = callback.handle.bind(callback);
-    }
-
-    for(var i = 0, name; name = commands[i]; i++){
-      this.events.on[name] = {
-        name: name,
-        callback: callback
-      };
+      this.events[command].push(callback);
     }
 
     return this;
   }
 
+  trigger(command, args){
+    if(this.events[command] === undefined){
+      return this.trigger('missing');
+    }
+
+    for(let event of this.events[command]){
+      event.apply(this, args);
+    }
+
+    return this;
+  }
 
   has(options){
     if(typeof options == 'string'){
       options = [options];
     }
 
-    for(var i = 0, option; option = options[i]; i++){
+    for(let option of options){
       if(this.options[option] !== undefined){
         return this.options[option];
       }
@@ -107,22 +105,9 @@ class Cli {
     return false;
   }
 
-
-  trigger(name, args){
-    if(!args){
-      args = [];
-    }
-
-    if(this.events.on[name] !== undefined){
-      return this.events.on[name].callback.apply(this, args);
-    } else {
-      this.trigger('missing');
-    }
-  }
-
-
   missing(callback){
     this.on('missing', callback);
+    return this;
   }
 
   prompt(question, callback){
@@ -137,10 +122,7 @@ class Cli {
         rl.close();
       });
     });
-
-    return this;
   }
-
 
   exit(code){
     process.exit(code);
