@@ -27,3 +27,41 @@ app.on('add:user', (name) => {
 
 app.start();
 ```
+
+#### Register commands
+```js
+app.on('my-command', (arg1, arg2, ...) => {
+  // do something
+});
+```
+
+#### Check for options
+```js
+app.has(['-h', '--help']); // will return true if set
+app.has(['-l=', '--lastname=']); // will return the value of --lastname if set
+```
+
+#### Prompt user for input
+```js
+app.prompt('My question: ').then(answer => console.log(answer));
+```
+
+#### Missing command
+```js
+app.on('missing', () => {
+  // if the entered command doesn't match any registered commands
+  // this event will fire
+});
+```
+
+#### App on exit
+```js
+app.on('exit', () => {
+  // this event will fire on app exit or termination
+});
+```
+
+#### Exit app
+```js
+app.exit(); // will close the app and fire the exit event
+```
