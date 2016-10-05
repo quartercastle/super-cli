@@ -4,7 +4,7 @@
   "description": "Super-CLI is a rapid way to create simple and powerful command line tools.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/super-cli.js"
+    "test": "mocha tests/index.js"
   },
   "keywords": [
     "cli",
