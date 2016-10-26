@@ -110,7 +110,7 @@ class Cli {
     return this;
   }
 
-  prompt(question, callback){
+  static prompt(question, callback){
     return new Promise((resolve, reject) => {
       const rl = readline.createInterface({
         input: process.stdin,
