@@ -1,6 +1,6 @@
 {
   "name": "super-cli",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Super-CLI is a rapid way to create simple and powerful command line tools.",
   "main": "index.js",
   "scripts": {
