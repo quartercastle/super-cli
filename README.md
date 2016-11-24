@@ -5,7 +5,7 @@
 
 Super-CLI is a rapid way to create simple and powerful command line tools.
 The scripts will be structured as follows
-`your-script command [options] [arguments, ...]`
+`super-cli-script command [options, ...] [arguments, ...]`
 
 ### Install
 ```sh
@@ -14,57 +14,55 @@ npm install super-cli -—save
 
 ### Usage
 To get started you have to require the super-cli module and register your commands.
-Remember to set the environment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x your-script`.
+Remember to set the environment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x super-cli-script`.
 ```js
 #!/usr/bin/env node
 
-const SuperCLI = require('super-cli');
+const SuperCLI = require('super-cli')
 
-const app = new SuperCLI({
-  name: 'my-super-cli-script'
-});
+const cli = new SuperCLI()
 
-app.on('add:user', (name) => {
-  console.log('Adding user: ', name);
-});
+cli.on('my-command', (arg) => {
+  console.log(arg)
+})
 
-app.start();
+cli.run()
 ```
 
 #### Register commands
 ```js
-app.on('my-command', (arg1, arg2, ...) => {
+cli.on('my-command', (arg1, arg2, ...) => {
   // do something
-});
+})
 ```
 
 #### Check for options
 ```js
-app.has(['-h', '--help']); // will return true if set
-app.has(['-l=', '--lastname=']); // will return the value of --lastname if set
+cli.has(['-h', '--help']) // will return true if set
+cli.has(['-l=', '--lastname=']) // will return the value of --lastname if set
 ```
 
 #### Prompt user for input
 ```js
-app.prompt('My question: ').then(answer => console.log(answer));
+cli.prompt('My question: ').then(answer => console.log(answer))
 ```
 
 #### Missing command
 ```js
-app.on('missing', () => {
+cli.on('missing', () => {
   // if the entered command doesn't match any registered commands
   // this event will fire
-});
+})
 ```
 
 #### App on exit
 ```js
-app.on('exit', () => {
-  // this event will fire on app exit or termination
-});
+cli.on('exit', () => {
+  // this event will fire on cli exit or termination
+})
 ```
 
-#### Exit app
+#### Exit cli
 ```js
-app.exit(); // will close the app and fire the exit event
+cli.exit() // will close the cli and fire the exit event
 ```
