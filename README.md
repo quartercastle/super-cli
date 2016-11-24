@@ -1,10 +1,11 @@
 # Super-CLI
 
 [![Build Status](https://travis-ci.org/kvartborg/super-cli.svg?branch=master)](https://travis-ci.org/kvartborg/super-cli)
+[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 Super-CLI is a rapid way to create simple and powerful command line tools.
 The scripts will be structured as follows
-`your-script command [options] <argument> ...`
+`your-script command [options] [arguments, ...]`
 
 ### Install
 ```sh
