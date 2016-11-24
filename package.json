@@ -2,9 +2,10 @@
   "name": "super-cli",
   "version": "0.0.5",
   "description": "Super-CLI is a rapid way to create simple and powerful command line tools.",
-  "main": "index.js",
+  "main": "lib/super-cli.js",
   "scripts": {
-    "test": "mocha tests/index.js"
+    "test": "standard && mocha test/index.js",
+    "lint": "standard"
   },
   "keywords": [
     "cli",
@@ -14,11 +15,12 @@
     "tools",
     "argument",
     "parser",
-    "handler"
+    "handler",
+    "framework"
   ],
   "files": [
     "index.js",
-    "libs",
+    "lib",
     "LICENSE.md",
     "README.md"
   ],
@@ -35,6 +37,7 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "standard": "^8.6.0"
   }
 }
