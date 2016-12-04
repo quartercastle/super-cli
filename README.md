@@ -38,13 +38,20 @@ cli.on('my-command', (arg1, arg2, ...) => {
 
 #### Check for options
 ```js
-cli.has(['-h', '--help']) // will return true if set
-cli.has(['-l=', '--lastname=']) // will return the value of --lastname if set
+cli.has('-h', '--help') // will return true if set
+cli.has('-l=', '--lastname=') // will return the value of --lastname if set
 ```
 
 #### Prompt user for input
 ```js
-cli.prompt('My question: ').then(answer => console.log(answer))
+cli.prompt('My question:').then(answer => console.log(answer))
+```
+
+#### Catch all commands and turn them to arguments
+```js
+cli.on('*', (...args) => {
+  console.log(args)
+})
 ```
 
 #### Missing command
