@@ -45,13 +45,13 @@ cli.on('my-command', (arg1, arg2, ...) => {
 ```
 
 #### Check for options
-
 ```js
 cli.option('-h', '--help') // will return true if set
 cli.option('-l=', '--lastname=') // will return the value of --lastname if set
 ```
 
 #### Run command
+Trigger a command from within the script.
 ```js
 cli.run('my-command')
 ```
@@ -62,6 +62,7 @@ cli.prompt('My question:').then(answer => console.log(answer))
 ```
 
 #### Catch all commands
+This will run if no registered command was triggered.
 ```js
 cli.on('*', (...args) => {
   console.log(args)
