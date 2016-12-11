@@ -60,7 +60,7 @@ cli.on('*', (...args) => {
 })
 ```
 
-#### App on exit
+#### On exit
 ```js
 cli.on('exit', () => {
   // this event will fire on cli exit or termination
