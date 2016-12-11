@@ -25,8 +25,6 @@ const cli = new SuperCLI()
 cli.on('my-command', arg => {
   console.log(arg)
 })
-
-cli.run()
 ```
 
 #### Register commands
@@ -44,6 +42,11 @@ cli.has('-l=', '--lastname=') // will return the value of --lastname if set
 cli.option('-l=', '--lastname=')
 ```
 
+#### Run command
+```js
+cli.run('my-command')
+```
+
 #### Prompt user for input
 ```js
 cli.prompt('My question:').then(answer => console.log(answer))
@@ -51,7 +54,7 @@ cli.prompt('My question:').then(answer => console.log(answer))
 
 #### Catch all commands and turn everything into arguments
 ```js
-cli.on('*', ...args => {
+cli.on('*', (...args) => {
   console.log(args)
 })
 ```
