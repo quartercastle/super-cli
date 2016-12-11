@@ -60,6 +60,19 @@ cli.on('*', (...args) => {
 })
 ```
 
+#### Listen for data on stdin
+```js
+cli.stdin(data => console.log(data))
+```
+
+#### Write data to stdout
+```js
+// you can use
+console.log('message')
+// or
+cli.stdout('message')
+```
+
 #### On exit
 ```js
 cli.on('exit', () => {

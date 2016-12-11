@@ -1,7 +1,7 @@
 {
   "name": "super-cli",
   "version": "0.0.5",
-  "description": "Super-CLI is a rapid way to create simple and powerful command line tools.",
+  "description": "Super-CLI is a micro framework for crafting command line tools.",
   "main": "lib/super-cli.js",
   "scripts": {
     "test": "standard && mocha --recursive test",
