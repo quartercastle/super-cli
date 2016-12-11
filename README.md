@@ -40,6 +40,8 @@ cli.on('my-command', (arg1, arg2, ...) => {
 ```js
 cli.has('-h', '--help') // will return true if set
 cli.has('-l=', '--lastname=') // will return the value of --lastname if set
+// Or you could use the alias option
+cli.option('-l=', '--lastname=')
 ```
 
 #### Prompt user for input
