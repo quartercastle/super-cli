@@ -20,7 +20,7 @@ npm install super-cli -—save
 
 ### Usage
 To get started you have to require the super-cli module and register your commands.
-Remember to set the environment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x super-cli-script`.
+Remember to set the environment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x my-script`.
 ```js
 #!/usr/bin/env node
 
