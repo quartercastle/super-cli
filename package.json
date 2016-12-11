@@ -1,6 +1,6 @@
 {
   "name": "super-cli",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "Super-CLI is a micro framework for command line tools.",
   "main": "lib/super-cli.js",
   "scripts": {
