@@ -56,14 +56,6 @@ cli.on('*', ...args => {
 })
 ```
 
-#### Missing command
-```js
-cli.missing(...args => {
-  // if the entered command doesn't match any registered commands
-  // this event will fire
-})
-```
-
 #### App on exit
 ```js
 cli.on('exit', () => {
