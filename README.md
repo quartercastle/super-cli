@@ -1,10 +1,17 @@
 # Super-CLI
 
+[![npm version](https://img.shields.io/npm/v/super-cli.svg)](https://www.npmjs.com/package/super-cli)
 [![Build Status](https://travis-ci.org/kvartborg/super-cli.svg?branch=master)](https://travis-ci.org/kvartborg/super-cli)
+[![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-Super-CLI is a rapid way to create simple and powerful command line tools.
-The scripts will be structured as follows
-`your-script command [options] <argument> ...`
+Super-CLI is a micro framework for creating command line tools in node.
+The goal with Super-CLI is to have a simple and powerful API, which enables you
+to create beautiful CLI programs with minimal effort.
+
+A Super-CLI script will have a structure like below.
+```sh
+my-script command [options, ...] [arguments, ...]
+```
 
 ### Install
 ```sh
@@ -13,57 +20,76 @@ npm install super-cli -—save
 
 ### Usage
 To get started you have to require the super-cli module and register your commands.
-Remember to set the environment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x your-script`.
+Remember to set the environment to node at the top of the script `#!/usr/bin/env node` and make your script executable `chmod a+x my-script`.
 ```js
 #!/usr/bin/env node
 
-const SuperCLI = require('super-cli');
+const SuperCLI = require('super-cli')
 
-const app = new SuperCLI({
-  name: 'my-super-cli-script'
-});
+const cli = new SuperCLI()
 
-app.on('add:user', (name) => {
-  console.log('Adding user: ', name);
-});
-
-app.start();
+cli.on('my-command', arg => {
+  console.log(arg)
+})
 ```
 
 #### Register commands
+Commands are simply registered like below and arguments are automatically
+parsed to the callbacks as function arguments.
+If your CLI program has a lot of commands, it would be a great idea to move
+the command callbacks into seperate files.
 ```js
-app.on('my-command', (arg1, arg2, ...) => {
+cli.on('my-command', (arg1, arg2, ...) => {
   // do something
-});
+})
 ```
 
 #### Check for options
 ```js
-app.has(['-h', '--help']); // will return true if set
-app.has(['-l=', '--lastname=']); // will return the value of --lastname if set
+cli.option('-h', '--help') // will return true if set
+cli.option('-l=', '--lastname=') // will return the value of --lastname if set
+```
+
+#### Run command
+Trigger a command from within the script.
+```js
+cli.run('my-command')
 ```
 
 #### Prompt user for input
 ```js
-app.prompt('My question: ').then(answer => console.log(answer));
+cli.prompt('My question:').then(answer => console.log(answer))
 ```
 
-#### Missing command
+#### Catch all commands
+This will run if no registered command was triggered.
 ```js
-app.on('missing', () => {
-  // if the entered command doesn't match any registered commands
-  // this event will fire
-});
+cli.on('*', (...args) => {
+  console.log(args)
+})
 ```
 
-#### App on exit
+#### Listen for data on stdin
 ```js
-app.on('exit', () => {
-  // this event will fire on app exit or termination
-});
+cli.stdin(data => console.log(data))
 ```
 
-#### Exit app
+#### Write data to stdout
 ```js
-app.exit(); // will close the app and fire the exit event
+// you can use
+console.log('message')
+// or
+cli.stdout('message')
+```
+
+#### On exit
+```js
+cli.on('exit', () => {
+  // this event will fire on cli exit or termination
+})
+```
+
+#### Exit cli
+```js
+cli.exit() // will close the cli and fire the exit event
 ```
