@@ -22,7 +22,7 @@ const SuperCLI = require('super-cli')
 
 const cli = new SuperCLI()
 
-cli.on('my-command', (arg) => {
+cli.on('my-command', arg => {
   console.log(arg)
 })
 
@@ -47,16 +47,16 @@ cli.has('-l=', '--lastname=') // will return the value of --lastname if set
 cli.prompt('My question:').then(answer => console.log(answer))
 ```
 
-#### Catch all commands and turn them to arguments
+#### Catch all and turn everything into arguments
 ```js
-cli.on('*', (...args) => {
+cli.on('*', ...args => {
   console.log(args)
 })
 ```
 
 #### Missing command
 ```js
-cli.on('missing', () => {
+cli.missing(...args => {
   // if the entered command doesn't match any registered commands
   // this event will fire
 })
