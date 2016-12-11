@@ -4,9 +4,14 @@
 [![Build Status](https://travis-ci.org/kvartborg/super-cli.svg?branch=master)](https://travis-ci.org/kvartborg/super-cli)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-Super-CLI is a rapid way to create simple and powerful command line tools.
-The scripts will be structured as follows
-`super-cli-script command [options, ...] [arguments, ...]`
+Super-CLI is a micro framework for creating command line tools in node.
+The goal with Super-CLI is to have a simple and powerful API, which enables you
+to create beautiful CLI programs with minimal effort.
+
+A Super-CLI script will have a structure like below.
+```sh
+my-script command [options, ...] [arguments, ...]
+```
 
 ### Install
 ```sh
@@ -29,6 +34,10 @@ cli.on('my-command', arg => {
 ```
 
 #### Register commands
+Commands are simply registered like below and arguments are automatically
+parsed to the callbacks as function arguments.
+If your CLI program has a lot of commands, it would be a great idea to move
+the command callbacks into seperate files.
 ```js
 cli.on('my-command', (arg1, arg2, ...) => {
   // do something
@@ -36,11 +45,10 @@ cli.on('my-command', (arg1, arg2, ...) => {
 ```
 
 #### Check for options
+
 ```js
-cli.has('-h', '--help') // will return true if set
-cli.has('-l=', '--lastname=') // will return the value of --lastname if set
-// Or you could use the alias option
-cli.option('-l=', '--lastname=')
+cli.option('-h', '--help') // will return true if set
+cli.option('-l=', '--lastname=') // will return the value of --lastname if set
 ```
 
 #### Run command
@@ -53,7 +61,7 @@ cli.run('my-command')
 cli.prompt('My question:').then(answer => console.log(answer))
 ```
 
-#### Catch all commands and turn everything into arguments
+#### Catch all commands
 ```js
 cli.on('*', (...args) => {
   console.log(args)

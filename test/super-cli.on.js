@@ -15,4 +15,8 @@ describe('# cli.on', () => {
     cli.on('command', () => {})
     assert.equal(true, cli._events['command'] !== undefined)
   })
+
+  it('Should throw an error if the callback is not a function', () => {
+    assert.throws(() => cli.on('command', 'should fail'), Error)
+  })
 })
