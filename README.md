@@ -49,7 +49,7 @@ cli.option('-l=', '--lastname=')
 cli.prompt('My question:').then(answer => console.log(answer))
 ```
 
-#### Catch all and turn everything into arguments
+#### Catch all commands and turn everything into arguments
 ```js
 cli.on('*', ...args => {
   console.log(args)
