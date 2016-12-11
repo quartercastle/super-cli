@@ -4,7 +4,7 @@
   "description": "Super-CLI is a micro framework for command line tools.",
   "main": "lib/super-cli.js",
   "scripts": {
-    "test": "standard && mocha --recursive test",
+    "test": "standard && ./node_modules/.bin/mocha --recursive test",
     "lint": "standard"
   },
   "keywords": [
@@ -19,7 +19,6 @@
     "framework"
   ],
   "files": [
-    "index.js",
     "lib",
     "LICENSE.md",
     "README.md"
