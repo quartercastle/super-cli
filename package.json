@@ -23,6 +23,9 @@
     "LICENSE.md",
     "README.md"
   ],
+  "engines": {
+    "node": ">=6"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kvartborg/super-cli.git"
