@@ -39,7 +39,7 @@ parsed to the callbacks as function arguments.
 If your CLI program has a lot of commands, it would be a great idea to move
 the command callbacks into seperate files.
 ```js
-cli.on('my-command', (arg1, arg2, ...) => {
+cli.on('my-command', (arg1, arg2, ...args) => {
   // do something
 })
 ```
