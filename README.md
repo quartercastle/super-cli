@@ -4,9 +4,7 @@
 [![Build Status](https://travis-ci.org/kvartborg/super-cli.svg?branch=master)](https://travis-ci.org/kvartborg/super-cli)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-Super-CLI is a micro framework for creating command line tools in node.
-The goal with Super-CLI is to have a simple and powerful API, which enables you
-to create beautiful CLI programs with minimal effort.
+Super-CLI is a micro framework for creating command line tools with Node.js.
 
 A Super-CLI script will have a structure like below.
 ```sh
